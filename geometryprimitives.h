@@ -6,7 +6,9 @@
 #include "geometryPrimitives/pyramid.h"
 #include "geometryPrimitives/sphere.h"
 #include "geometryPrimitives/tetrahedron.h"
-#include "geometryPrimitives/torus.h"
+
+// not implemented yet
+//#include "geometryPrimitives/torus.h"
 
 #endif // GEOMETRYPRIMITIVES
 
