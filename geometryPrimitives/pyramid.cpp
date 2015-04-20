@@ -119,7 +119,7 @@ void Pyramid::drawArrays()
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
-};
+}
 
 
 

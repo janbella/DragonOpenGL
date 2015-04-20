@@ -154,7 +154,7 @@ void Cube::drawArrays()
 	
 	// Others arrays could also be used: 
 	// GL_COLOR_ARRAY, GL_INDEX_ARRAY, GL_TEXTURE_COORD_ARRAY, ...
-};
+}
 
 
 

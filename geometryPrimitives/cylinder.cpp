@@ -302,7 +302,7 @@ void Cylinder::drawArrays()
     // disable the use of arrays (do not forget!)
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
-};
+}
 
 
 void Cylinder::drawElements()
