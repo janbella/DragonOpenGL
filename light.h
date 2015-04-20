@@ -4,24 +4,41 @@
 # ifndef PROJECT_LIGHT_H_
 # define PROJECT_LIGHT_H_
 
-# include "vec.h"
+# include "vector4.h"
 
-struct Light {
-  vec4 position;
-  vec4 la;
-  vec4 ld;
-  vec4 ls;
+/**
+ * @brief The Light struct is a class encapsulating light properties
+ */
+struct Light
+{
+    Vector4 position;    // light position
+    Vector4 ambient;          // ambience vector
+    Vector4 diffuse;          // diffusion
+    Vector4 specular;          // specular
 
-  Light( const vec4& p, const vec4& a, const vec4& d, const vec4& s ) :
-    position( p ), la( a ), ld( d ), ls( s )
-  {}
+    /**
+     * @brief Light constructor.
+     * @param position position of the light
+     * @param ambient ambient part of the light
+     * @param diffuse diffuse part of the light
+     * @param specular specular part of the light
+     */
+    Light( const Vector4& position, const Vector4& ambient, const Vector4& diffuse, const Vector4& specular ) :
+        position(position),
+        ambient(ambient),
+        diffuse(diffuse),
+        specular(specular)
+    {  }
 
-  Light() :
-     position( 0.0, 0.0, 0.0, 1.0 ),
-     la( 0, 0, 0, 1 ),
-     ld( 1, 1, 1, 1 ),
-     ls( 1, 1, 1, 1 )
-  {}
+    /**
+     * @brief Light non parametric constructor. Sets default values for attributes.
+     */
+    Light() : position(0.0, 0.0, 0.0, 1.0 ),
+        ambient( 0,   0,   0,   1 ),
+        diffuse( 1,   1,   1,   1 ),
+        specular(1,   1,   1,   1 )
+    {  }
+
 };
 
-# endif 
+# endif

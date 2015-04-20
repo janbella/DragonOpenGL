@@ -3,20 +3,39 @@
 
 # include "renderable.h"
 # include "shader.h"
-# include <vec.h>
 
+#include <QVector4D>
+
+#include "vector4.h"
+
+/**
+ * @brief The LightsMaterials class scene with 12 spheres
+ */
 class LightsMaterials : public Renderable
 {
-	public:
-		LightsMaterials();
-		virtual void draw();
-		virtual void init(Viewer &);
+    private:
+        ShaderProgram program; // shader program
 
-	private:
-		// draw 12 spheres with different materials set with glMaterial*
-		// Exemple adapted from the OpenGL Programming Guide (The Red Book)
-		void exampleMaterial();
-        ShaderProgram program;
+    public:
+        /**
+         * @brief LightsMaterials constructor.
+         */
+        LightsMaterials();
+
+        /**
+         * @brief draw implementation of Renderable draw method
+         */
+        virtual void draw();
+
+        /**
+         * @brief init implementation of Renderable init method
+         */
+        virtual void init(Viewer &);
+
+    private:
+        // draw 12 spheres with different materials set with glMaterial*
+        // Exemple adapted from the OpenGL Programming Guide (The Red Book)
+        void exampleMaterial();
 };
 
 #endif

@@ -78,10 +78,8 @@ ShaderProgram::ShaderProgram() :
   id( 0 )
 {}
 
-void
-ShaderProgram::load(
-  const std::string& vertexShaderSourceFile,
-  const std::string& fragmentShaderSourceFile )
+
+void ShaderProgram::load( const std::string& vertexShaderSourceFile, const std::string& fragmentShaderSourceFile )
 {
   if( glIsShader( id ) )
 	{
