@@ -80,6 +80,7 @@ void Skybox::drawSkyboxCube(float size)
 
     glPushMatrix();
     glRotatef(90,1,0,0);
+    glTranslatef(1,1,1);
     glScalef(size,size,size);
 
     GLfloat s0[] = {+0.5, -0.5, -0.5};

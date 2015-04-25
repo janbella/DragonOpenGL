@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 
+
 ObjectLoader::ObjectLoader() : filename("")
 {  }
 
@@ -108,13 +109,14 @@ bool ObjectLoader::loadObj()
             //Presuming all faces are triangles
             Triangle triangle;
             char slash;
-            //            file >> triangle.v1 >> slash >> triangle.t1 >> slash >> triangle.n1;
-            //            file >> triangle.v2 >> slash >> triangle.t2 >> slash >> triangle.n2;
-            //            file >> triangle.v3 >> slash >> triangle.t3 >> slash >> triangle.n3;
 
-            file >> triangle.v1 >> slash >> slash >> triangle.n1;
-            file >> triangle.v2 >> slash >> slash >> triangle.n2;
-            file >> triangle.v3 >> slash >> slash >> triangle.n3;
+            file >> triangle.v1 >> slash >> triangle.t1 >> slash >> triangle.n1;
+            file >> triangle.v2 >> slash >> triangle.t2 >> slash >> triangle.n2;
+            file >> triangle.v3 >> slash >> triangle.t3 >> slash >> triangle.n3;
+
+           // file >> triangle.v1 >> slash >> slash >> triangle.n1;
+           // file >> triangle.v2 >> slash >> slash >> triangle.n2;
+           // file >> triangle.v3 >> slash >> slash >> triangle.n3;
 
             faces.push_back(triangle);
         }
@@ -131,7 +133,7 @@ bool ObjectLoader::loadObj()
     return true;
 }
 
-void ObjectLoader::createDisplayList(GLuint index)
+void ObjectLoader::createDisplayList(GLuint index, GLint shaderTexCoord)
 {
     if(vertices.empty() || normals.empty() /*|| texCoords.empty()*/)
     {
@@ -147,15 +149,15 @@ void ObjectLoader::createDisplayList(GLuint index)
     for(std::vector<Triangle>::const_iterator iter = faces.cbegin(); iter!=faces.cend();iter++)
     {
         glNormal3f(normals[iter->n1].x(),normals[iter->n1].y(),normals[iter->n1].z());
-        //        glTexCoord2f(texCoords[iter->t1].x(),texCoords[iter->t1].y());
+        glVertexAttrib2f(shaderTexCoord, texCoords[iter->t1].x(),texCoords[iter->t1].y());
         glVertex3f(vertices[iter->v1].x(),vertices[iter->v1].y(),vertices[iter->v1].z());
 
         glNormal3f(normals[iter->n2].x(),normals[iter->n2].y(),normals[iter->n2].z());
-        //        glTexCoord2f(texCoords[iter->t2].x(),texCoords[iter->t2].y());
+        glVertexAttrib2f(shaderTexCoord, texCoords[iter->t2].x(),texCoords[iter->t2].y());
         glVertex3f(vertices[iter->v2].x(),vertices[iter->v2].y(),vertices[iter->v2].z());
 
         glNormal3f(normals[iter->n3].x(),normals[iter->n3].y(),normals[iter->n3].z());
-        //        glTexCoord2f(texCoords[iter->t3].x(),texCoords[iter->t3].y());
+        glVertexAttrib2f(shaderTexCoord, texCoords[iter->t3].x(),texCoords[iter->t3].y());
         glVertex3f(vertices[iter->v3].x(),vertices[iter->v3].y(),vertices[iter->v3].z());
     }
 
@@ -197,14 +199,14 @@ unsigned int ObjectLoader::createVBO(GLuint verticesBO, GLuint normalsBO, GLuint
         normalsBuffer.push_back(normals[iter->n3].y());
         normalsBuffer.push_back(normals[iter->n3].z());
 
-//        texCoordsBuffer.push_back(texCoords[iter->t1].x());
-//        texCoordsBuffer.push_back(texCoords[iter->t1].y());
+        texCoordsBuffer.push_back(texCoords[iter->t1].x());
+        texCoordsBuffer.push_back(texCoords[iter->t1].y());
 
-//        texCoordsBuffer.push_back(texCoords[iter->t2].x());
-//        texCoordsBuffer.push_back(texCoords[iter->t2].y());
+        texCoordsBuffer.push_back(texCoords[iter->t2].x());
+        texCoordsBuffer.push_back(texCoords[iter->t2].y());
 
-//        texCoordsBuffer.push_back(texCoords[iter->t3].x());
-//        texCoordsBuffer.push_back(texCoords[iter->t3].y());
+        texCoordsBuffer.push_back(texCoords[iter->t3].x());
+        texCoordsBuffer.push_back(texCoords[iter->t3].y());
 
     }
 
