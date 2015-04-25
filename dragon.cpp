@@ -12,6 +12,11 @@ Dragon::Dragon()
 #endif
 }
 
+void Dragon::init(Viewer& v)
+{
+}
+
+
 void Dragon::initDispLists()
 {
     dispListIndex = glGenLists(8);

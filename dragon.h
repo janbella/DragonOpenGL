@@ -16,6 +16,8 @@ public:
     Dragon();
     ~Dragon();
 
+    void init(Viewer&);
+
     // inherited from Renderable, should be edited
     virtual void draw();
 

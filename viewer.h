@@ -1,9 +1,9 @@
 /*
  * Main GL viewer class, based on the QGLViewer library.
- * 
+ *
  * QGLViewer is a Qt-based viewer, which provides an OpenGL rendering
  * context and GUI event management.
- * The documentation of the QGLViewer library can be found at the following 
+ * The documentation of the QGLViewer library can be found at the following
  * url: http://www.libqglviewer.com
  */
 # ifndef _VIEWER_
@@ -13,39 +13,43 @@
 # include <list>
 
 class Renderable;
-class Viewer :
-    public QGLViewer {
+
+class Viewer : public QGLViewer
+{
+
 public :
-		Viewer( const QGLFormat& format );
-		virtual ~Viewer();
-		void addRenderable(Renderable *r);
+    Viewer( const QGLFormat& format );
+
+    virtual ~Viewer();
+
+    void addRenderable(Renderable *r);
 
 protected :
-  /* Scene methods */
-  // List of the scene objects, to render, animate, ...
-  std::list<Renderable *> renderableList;
-		
-  // Create the scene and initializes rendering parameters
-  virtual void init();
-		
-  // Draw every objects of the scene
-  virtual void draw();
-		
-  // Animate every objects of the scene
-  virtual void animate();
+    /* Scene methods */
+    // List of the scene objects, to render, animate, ...
+    std::list<Renderable *> renderableList;
 
-  /* Viewing parameters */
-  bool toogleWireframe;
-  bool toogleLight;
+    // Create the scene and initializes rendering parameters
+    virtual void init();
 
-  // Handle keyboard events specifically
-  virtual void keyPressEvent(QKeyEvent *e);
+    // Draw every objects of the scene
+    virtual void draw();
 
-  // Handle keyboard events specifically
-  virtual void mouseMoveEvent(QMouseEvent *e);
-		
-  // Draw every objects of the scene
-  virtual QString helpString() const;
+    // Animate every objects of the scene
+    virtual void animate();
+
+    // Viewing parameters
+    bool toogleWireframe;
+    bool toogleLight;
+
+    // Handle keyboard events specifically
+    virtual void keyPressEvent(QKeyEvent *e);
+
+    // Handle keyboard events specifically
+    virtual void mouseMoveEvent(QMouseEvent *e);
+
+    // Draw every objects of the scene
+    virtual QString helpString() const;
 };
 
 #endif

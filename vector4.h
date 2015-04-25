@@ -15,4 +15,4 @@ struct Vector4
   Vector4( float x, float y, float z, float w );
 };
 
-# endif /* VECTOR4_H_ */
+# endif // VECTOR4_H_

@@ -2,7 +2,6 @@
 #define OBJECTLOADER_H
 
 #include "triangle.h"
-#include "vector4.h"
 
 #include <vector>
 #include <string>
@@ -35,9 +34,6 @@ public:
     const std::vector<QVector3D>& getVertices() const;
     const std::vector<QVector3D>& getNormals() const;
     const std::vector<QVector2D>& getTexCoords() const;
-
-
-
 
     ~ObjectLoader();
 };
