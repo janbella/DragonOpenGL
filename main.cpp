@@ -1,10 +1,9 @@
 #include "glCheck.h"
 #include "viewer.h"
-#include "lightsMaterials.h"
 #include "geometryprimitives.h"
 #include "dragon.h"
 #include "skybox.h"
-//#include "temporarydragon.h"
+//#include "particles.h"
 
 #include <iostream>
 #include <qapplication.h>
@@ -25,14 +24,11 @@ int main(int argc, char** argv)
 
     // build your scene here
     viewer.addRenderable(new Skybox());
-    //viewer.addRenderable(new LightsMaterials());
-
     viewer.addRenderable(new Dragon());
+    //   viewer.addRenderable(new Particles());
 
     // Make the viewer window visible on screen.
     viewer.show(); // this function will create the GL context
-
-    //viewer.addRenderable(new Dragon());
 
     // Run main loop.
     return application.exec();

@@ -2,6 +2,7 @@
 #include "geometryprimitives.h"
 #include "objectloader.h"
 #include "glCheck.h"
+#include "texturingtools.h"
 
 #include <QImage>
 #include <QGLWidget>
@@ -11,21 +12,10 @@ Dragon::Dragon()
     loaded = false;
 }
 
-void Dragon::init(Viewer& v)
+void Dragon::init(Viewer& )
 {
     // load textures
-    textureId = loadTexture(dragonTexture);
-
-    program.load("shaders/texture.vert", "shaders/texture.frag");
-    // get the program id and use it to have access to uniforms
-    GLint program_id = (GLint)program;
-    GLCHECK(glUseProgram( program_id ) );
-    // get uniform locations (see the fragment shader)
-    GLCHECK(texture = glGetUniformLocation( program_id, "texture0"));
-    // get vertex texture coordinate locations
-    GLCHECK(texcoord = glGetAttribLocation( program_id, "texcoord0"));
-    // tex0 on the sampler will use the texture unit #0
-    GLCHECK(glUniform1i( texture, 0 ) );
+    Texturing::init(dragonTexture,&program,&textureId,&texture,&texcoord);
 }
 
 
@@ -145,10 +135,8 @@ void Dragon::draw()
 
     GLCHECK(glActiveTexture(GL_TEXTURE0));
 
-    // bind the crate texture for texture unit 0
     GLCHECK(glBindTexture(GL_TEXTURE_2D, textureId));
 
-    // set the texture sampler id in shader to active texture unit number
     GLCHECK(glUniform1i(texture, 0));
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -193,25 +181,4 @@ void Dragon::keyPressEvent(QKeyEvent*, Viewer&)
 // inherited from Renderable, should be edited
 void Dragon::mouseMoveEvent(QMouseEvent*, Viewer&)
 {
-}
-
-GLuint Dragon::loadTexture(const char *filename)
-{
-    // generates an OpenGL texture id, and store it
-    GLuint id;
-    GLCHECK(glGenTextures(1, &id));
-
-    // load a texture file as a QImage
-    QImage img = QGLWidget::convertToGLFormat(QImage(filename));
-
-    // specify the texture(2D texture, rgba, single file)
-    GLCHECK(glBindTexture(GL_TEXTURE_2D, id));
-
-    GLCHECK(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img.width(), img.height(), 0,
-                    GL_RGBA, GL_UNSIGNED_BYTE, img.bits()));
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-    return id;
 }

@@ -59,7 +59,7 @@ void Viewer::init()
         glDisable(GL_LIGHTING);
 
     setSceneRadius(1000.0f);
-    this->camera()->setFlySpeed(0.000001);
+    this->camera()->setFlySpeed(1);
 
 
     for (std::list<Renderable *>::iterator it = renderableList.begin(),

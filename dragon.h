@@ -35,14 +35,14 @@ public:
 private:
     //const std::string headObj = "models/???";
     //const std::string neckObj = "models/???";
-    const std::string bodyObj = "models/torso.obj";
+    const std::string bodyObj = "models/better dragon/torso.obj";
     //const std::string tailObj = "models/???";
-    const std::string leftWingObj = "models/wing.obj";
-    const std::string rightWingObj = "models/right_wing.obj";
-    const std::string leftFrontLegObj = "models/leg_left.obj";
-    const std::string rightFrontLegObj = "models/leg.obj";
-    const std::string leftBackLegObj = "models/backleg_left.obj";
-    const std::string rightBackLegObj = "models/backleg.obj";
+    const std::string leftWingObj = "models/better dragon/wing.obj";
+    const std::string rightWingObj = "models/better dragon/right_wing.obj";
+    const std::string leftFrontLegObj = "models/better dragon/leg_left.obj";
+    const std::string rightFrontLegObj = "models/better dragon/leg.obj";
+    const std::string leftBackLegObj = "models/better dragon/backleg_left.obj";
+    const std::string rightBackLegObj = "models/better dragon/backleg.obj";
 
     const char* dragonTexture = "textures/Dragon_ground_color.jpg";
 
@@ -72,7 +72,7 @@ GLuint loadTexture(const char *filename);
 
 bool loaded = false;
 
-const char* texturePath = "textures/skybox.jpg";
+const char* texturePath = "textures/Dragon_ground_color.jpg";
 
 GLuint textureId;
 
