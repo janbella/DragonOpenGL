@@ -26,7 +26,7 @@ public:
     void setFilename(const std::string& filename);
     bool loadObj();
 
-    void createDisplayList(GLuint index);
+    void createDisplayList(GLuint index, GLint shaderTexCoord);
 
     unsigned int createVBO(GLuint verticesBO, GLuint normalsBO, GLuint textCoordsBO);
 

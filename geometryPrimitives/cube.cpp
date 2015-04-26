@@ -43,7 +43,7 @@ void Cube::draw()
 void Cube::drawImmediate()
 {
 	// vertices coordinates can be stored
-//	GLfloat s0[] = {+0.5, -0.5, -0.5};
+    //	GLfloat s0[] = {+0.5, -0.5, -0.5};
 	GLfloat s1[] = {+0.5, +0.5, -0.5};
 	GLfloat s2[] = {-0.5, +0.5, -0.5};
 	GLfloat s3[] = {-0.5, -0.5, -0.5};

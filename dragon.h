@@ -6,6 +6,7 @@
 #include <GL/glut.h>
 
 #include "renderable.h"
+#include "shader.h"
 
 //#define USE_VBO
 
@@ -34,14 +35,16 @@ public:
 private:
     //const std::string headObj = "models/???";
     //const std::string neckObj = "models/???";
-    const std::string bodyObj = "models/dragon_torso.obj";
+    const std::string bodyObj = "models/torso.obj";
     //const std::string tailObj = "models/???";
-    const std::string leftWingObj = "models/left_wing.obj";
-    const std::string rightWingObj = "models/wing_right.obj";
-    const std::string leftFrontLegObj = "models/left_front_better.obj";
-    const std::string rightFrontLegObj = "models/right_front_better.obj";
-    const std::string leftBackLegObj = "models/back_left.obj";
-    const std::string rightBackLegObj = "models/easyleg.obj";
+    const std::string leftWingObj = "models/wing.obj";
+    const std::string rightWingObj = "models/right_wing.obj";
+    const std::string leftFrontLegObj = "models/leg_left.obj";
+    const std::string rightFrontLegObj = "models/leg.obj";
+    const std::string leftBackLegObj = "models/backleg_left.obj";
+    const std::string rightBackLegObj = "models/backleg.obj";
+
+    const char* dragonTexture = "textures/Dragon_ground_color.jpg";
 
 #define BODY 0
 #define LEFTWING 1
@@ -64,6 +67,23 @@ GLuint dispListIndex;
 void initDispLists();
 
 void initVBOs();
+
+GLuint loadTexture(const char *filename);
+
+bool loaded = false;
+
+const char* texturePath = "textures/skybox.jpg";
+
+GLuint textureId;
+
+// texture unit shader binding
+GLint texture;
+
+// texture coordinate bindings
+GLint texcoord;
+
+// shader program
+ShaderProgram program;
 };
 
 #endif // DRAGON_H
