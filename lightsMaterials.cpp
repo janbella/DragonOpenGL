@@ -3,12 +3,19 @@
 # include "material.h"
 # include "light.h"
 
-# ifndef __APPLE__
-#   include <GL/glew.h>
-#   include <GL/glut.h>
+# ifdef __APPLE__
+#   include <glew.h>
+#   include <glut.h>
 # else
-#   include <GLUT/glut.h>
-# endif
+#ifdef WIN32
+#include <glew.h>
+#include <glut.h>
+#else
+#include <GL/glew.h>
+#include <GL/glut.h>
+#endif
+#endif
+
 
 // colour constants
 static const Vector4 black( 0.0f, 0.0f, 0.0f, 1.0f );  // black colour
@@ -52,8 +59,9 @@ LightsMaterials::LightsMaterials()
 
 void LightsMaterials::init(Viewer &v)
 {
-    (void)v;
-
+/*
+////    (void)v; для верности  ^^
+*/
     program.load("shaders/material.vert", "shaders/material.frag");
     GLCHECK( glUseProgram( program ) );
     GLCHECK( glUniform4fv( glGetUniformLocation( program, "light_1.ambient"  ), 1, &light_1.ambient.x ) );

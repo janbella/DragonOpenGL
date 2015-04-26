@@ -30,7 +30,7 @@ protected :
     std::list<Renderable *> renderableList;
 
     // Create the scene and initializes rendering parameters
-    virtual void init();
+    virtual void init(int argc, char** argv);
 
     // Draw every objects of the scene
     virtual void draw();

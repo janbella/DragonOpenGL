@@ -1,19 +1,26 @@
 #include <QKeyEvent>
 
-#ifndef __APPLE__
+#ifdef __APPLE__
+#include <GL\glut.h>
+#else
+#ifdef WIN32
+#include <GL\glut.h>
+#else
 #include <GL/glew.h>
 #include <GL/glut.h>
-#else
-#include <GLUT/glut.h>
 #endif
+#endif
+
 
 #include "viewer.h"
 #include "renderable.h"
 
+
+bool _isAnimationStarted;
 Viewer::Viewer( const QGLFormat& format )
     : QGLViewer( format )
 {
-
+	setAnimationPeriod(10);
 }
 
 Viewer::~Viewer()
@@ -30,11 +37,11 @@ void Viewer::addRenderable(Renderable *r)
     renderableList.push_back(r);
 }
 
-void Viewer::init()
+void Viewer::init(int argc, char** argv)
 {
     // glut initialisation (mandatory)
     int dum = 0;
-    glutInit(&dum, NULL);
+    glutInit(&argc,argv);
 
 #ifndef __APPLE__
     // glew initialization for extensions
@@ -58,13 +65,14 @@ void Viewer::init()
     else
         glDisable(GL_LIGHTING);
 
-    setSceneRadius(1000.0f);
+    setSceneRadius(10000.0f);
     this->camera()->setFlySpeed(0.000001);
 
 
     for (std::list<Renderable *>::iterator it = renderableList.begin(),
          end = renderableList.end(); it != end; ++ it ) {
         (*it)->init(*this);
+		
     }
 
 }
@@ -72,10 +80,16 @@ void Viewer::init()
 
 void Viewer::draw()
 {  
+
     // draw every objects in renderableList
     for (std::list<Renderable *>::iterator it = renderableList.begin(), end = renderableList.end(); it != end; ++ it )
     {
         (*it)->draw();
+		if (!_isAnimationStarted)
+		{
+		startAnimation();
+		_isAnimationStarted = true;
+		}
     }
 }
 
