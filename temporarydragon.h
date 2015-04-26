@@ -6,8 +6,8 @@
 #include <glew.h>
 #include <glut.h>
 #else
-#include <GL/glew.h>
-#include <GL/glut.h>
+#include <glew.h>
+#include <glut.h>
 #endif
 #include "renderable.h"
 #include "objectloader.h"
@@ -15,10 +15,24 @@
 
 #include "shader.h"
 
+double go = 0;
 
+double testwalky=0;
+double testwalkz=0;
+
+double testwalky_=0;
+double testwalkz_=0;
+
+int counter = -50;
+double testscale = 1;
 double angle = 0.0;
-double angleChange = 0.1;
+double angle_ = 0.0;
+double angleChange = 0.2;
 bool increase = false;
+bool up = false;
+bool up_ = false;
+
+bool r = false;
 // the dragon model drawing and manipulating
 
     const std::string bl = "models/backleg.obj";
@@ -137,16 +151,17 @@ public:
     virtual void draw()
     {
         if(!loaded) load();
-        GLCHECK(glUseProgram( (GLint)program ));
+		/*glTranslatef(0.0,0.0,go);
+		glCallList(0);
+		glCallList(1);
+		glCallList(2);
+		glCallList(3);
+		glCallList(4);
+		glCallList(6);
+		*/
 
-        GLCHECK(glActiveTexture(GL_TEXTURE0));
-
-        // bind the crate texture for texture unit 0
-        GLCHECK(glBindTexture(GL_TEXTURE_2D, textureId));
-
-        // set the texture sampler id in shader to active texture unit number
-        GLCHECK(glUniform1i(texture, 0));
-
+		//flying version
+    /*
 		glCallList(0);
 		glCallList(1);
 		glCallList(2);
@@ -168,18 +183,88 @@ public:
 		
 	//	glPopMatrix();
         glPopMatrix();
-
+		*/
+		
+		if(r)
+		{
+		glTranslatef(0.0,0.0,go);
+		glCallList(3);
+		glCallList(4);
+		glCallList(6);
+		glCallList(7);
+		glCallList(5);
+		glPushMatrix();
+		glRotatef(angle,1.0f,1.0,0.0);
+		glTranslatef(0,testwalky,testwalkz);
+		glCallList(1);
+		glPopMatrix();
+		glPushMatrix();
+		glRotatef(angle_,1.0f,1.0,0.0);
+		glTranslatef(0,testwalky_,testwalkz_);
+		glCallList(2);
+		glPopMatrix();
+		}
+		else 
+		{
+		glTranslatef(0.0,0.0,go);
+		glCallList(0);
+		glCallList(1);
+		glCallList(2);
+		glCallList(3);
+		glCallList(4);
+		glCallList(5);
+		glCallList(6);
+		glCallList(7);
+		}
 
     };
 
 	virtual void animate()
     {
-		if (angle>10 || angle<-10)
+		if (r){
+		go +=0.01;
+		if (testwalky>0.2 || testwalky<-0.2)
+			up=!up;
+		if (!up)
+		{
+			testwalky+=0.008;
+			angle+=angleChange;
+			testwalkz+=0.008;
+		}
+		else
+		{
+			testwalky-=0.008;
+			angle-=angleChange;
+			testwalkz-=0.008;
+		}
+
+		if (counter>=0)
+		{
+		if (testwalky_>0.2 || testwalky_<-0.2)
+			up_=!up_;
+		if (!up_)
+		{
+			testwalky_+=0.008;
+			testwalkz_+=0.008;
+			angle_+=angleChange;
+		}
+		else
+		{
+			testwalky_-=0.008;
+			testwalkz_-=0.008;
+			angle_-=angleChange;
+		}
+
+		}
+		else counter++;
+		}
+		
+	/*	if (angle>5 || angle<-5)
 			increase=!increase;
 		if (increase)
 			angle+=angleChange;
 		else
-			angle-=angleChange;
+			angle-=angleChange;*/
     };
 
 	virtual void keyPressEvent(QKeyEvent* e, Viewer& v) {
@@ -193,9 +278,14 @@ public:
 			keySPress();
 		else if (e->key()==Qt::Key_Plus)			
 		{
-			if (angleChange<0.7)
+			if (angleChange<0.5)
 			angleChange*=1.1;
 			
+		}
+
+		else if (e->key()==Qt::Key_R)
+		{
+			r=!r;
 		}
 		else if (e->key()==Qt::Key_Minus)
 		{
@@ -233,7 +323,7 @@ private:
     ShaderProgram program;
 
 
-    bool loaded = false;
+   
 
 };
 

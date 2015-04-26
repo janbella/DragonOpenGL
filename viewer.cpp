@@ -1,15 +1,8 @@
 #include <QKeyEvent>
 
-#ifdef __APPLE__
-#include <GL\glut.h>
-#else
-#ifdef WIN32
-#include <GL\glut.h>
-#else
-#include <GL/glew.h>
-#include <GL/glut.h>
-#endif
-#endif
+
+#include <glew.h>
+#include <glut.h>
 
 
 #include "viewer.h"
@@ -20,7 +13,7 @@ bool _isAnimationStarted;
 Viewer::Viewer( const QGLFormat& format )
     : QGLViewer( format )
 {
-	aP = 10;
+	aP = 50;
 	setAnimationPeriod(aP);
 }
 
