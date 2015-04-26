@@ -1,7 +1,7 @@
 /*  Created on: Feb 27, 2015
  *      Author: T.Delame (tdelame@gmail.com)
  */
-# include <shader.h>
+# include "shader.h"
 # include <stdexcept>
 # include <fstream>
 # include <sstream>
@@ -68,10 +68,10 @@ static GLuint compile_shader ( std::string shader_name, GLuint type )
 
 ShaderProgram::~ShaderProgram()
 {
-  if( glIsShader( id ) )
+/*  if( glIsShader( id ) )
     {
 	  GLCHECK( glDeleteProgram( id ) );
-    }
+    }*/
 }
 
 ShaderProgram::ShaderProgram() :

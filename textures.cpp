@@ -6,9 +6,9 @@
 #include <iostream>
 #include <cstdio>
 #ifndef __APPLE__
-#include <GL/glut.h>
+#include <glut.h>
 #else
-#include <GLUT/glut.h>
+#include <glut.h>
 #endif
 #include <QGLViewer/qglviewer.h>
 

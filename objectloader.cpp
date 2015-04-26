@@ -149,15 +149,15 @@ void ObjectLoader::createDisplayList(GLuint index, GLint shaderTexCoord)
     for(std::vector<Triangle>::const_iterator iter = faces.cbegin(); iter!=faces.cend();iter++)
     {
         glNormal3f(normals[iter->n1].x(),normals[iter->n1].y(),normals[iter->n1].z());
-        glVertexAttrib2f(shaderTexCoord, texCoords[iter->t1].x(),texCoords[iter->t1].y());
+        //glVertexAttrib2f(shaderTexCoord, texCoords[iter->t1].x(),texCoords[iter->t1].y());
         glVertex3f(vertices[iter->v1].x(),vertices[iter->v1].y(),vertices[iter->v1].z());
 
         glNormal3f(normals[iter->n2].x(),normals[iter->n2].y(),normals[iter->n2].z());
-        glVertexAttrib2f(shaderTexCoord, texCoords[iter->t2].x(),texCoords[iter->t2].y());
+       // glVertexAttrib2f(shaderTexCoord, texCoords[iter->t2].x(),texCoords[iter->t2].y());
         glVertex3f(vertices[iter->v2].x(),vertices[iter->v2].y(),vertices[iter->v2].z());
 
         glNormal3f(normals[iter->n3].x(),normals[iter->n3].y(),normals[iter->n3].z());
-        glVertexAttrib2f(shaderTexCoord, texCoords[iter->t3].x(),texCoords[iter->t3].y());
+       // glVertexAttrib2f(shaderTexCoord, texCoords[iter->t3].x(),texCoords[iter->t3].y());
         glVertex3f(vertices[iter->v3].x(),vertices[iter->v3].y(),vertices[iter->v3].z());
     }
 

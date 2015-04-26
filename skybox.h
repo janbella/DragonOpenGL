@@ -1,8 +1,8 @@
 #ifndef SKYBOX_H
 #define SKYBOX_H
 
-#include <GL/glew.h>
-#include <GL/glut.h>
+#include <glew.h>
+#include <glut.h>
 #include <string>
 
 #include "shader.h"
@@ -21,7 +21,7 @@ public:
 
 
 private:
-    const char* texturePath = "textures/skybox.jpg";
+    const char* texturePath;
 
     GLuint textureId;
 

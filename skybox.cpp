@@ -8,7 +8,7 @@
 
 Skybox::Skybox()
 {
-
+	texturePath = "textures/skybox.jpg";
 }
 
 void Skybox::init(Viewer&)

@@ -2,8 +2,8 @@
 #define TEMPORARYDRAGON
 
 #include <list>
-#include <GL/glew.h>
-#include <GL/glut.h>
+#include <glew.h>
+#include <glut.h>
 
 #include "renderable.h"
 #include "objectloader.h"
@@ -11,10 +11,26 @@
 
 #include "shader.h"
 
+
+double angle = 0.0;
+bool increase = false;
 // the dragon model drawing and manipulating
+
+    const std::string bl = "dragon2/backleg.obj";
+	const std::string bll = "dragon2/backleg_left.obj";
+	const std::string l = "dragon2/leg.obj";
+	const std::string ll = "dragon2/leg_left.obj";
+	const std::string rw = "dragon2/wing.obj";
+	const std::string t = "dragon2/torso.obj";
+	const std::string w = "dragon2/right_wing.obj";
+    const char* dragonTexture = "textures/Dragon_ground_color.jpg";
+    const char* texturePath = "textures/skybox.jpg";
+	bool loaded = false;
+
 class TemporaryDragon : public Renderable
 {
 public:
+
     TemporaryDragon()
     {
         loaded = false;
@@ -22,12 +38,50 @@ public:
 
     void load()
     {
-        dispListIndex = glGenLists(1);
+        dispListIndex = glGenLists(8);
 
-        ObjectLoader objLoader(dragonOBJ);
+        ObjectLoader objLoader(bl);
         if(objLoader.loadObj())
         {
             objLoader.createDisplayList(dispListIndex, texcoord);
+        }
+
+		
+        objLoader.setFilename(bll);
+        if(objLoader.loadObj())
+        {
+            objLoader.createDisplayList(dispListIndex+1, texcoord);
+        }
+
+		
+        objLoader.setFilename(l);
+        if(objLoader.loadObj())
+        {
+            objLoader.createDisplayList(dispListIndex+2, texcoord);
+        }
+		
+        objLoader.setFilename(ll);
+        if(objLoader.loadObj())
+        {
+            objLoader.createDisplayList(dispListIndex+3, texcoord);
+        }
+		
+        objLoader.setFilename(rw);
+        if(objLoader.loadObj())
+        {
+            objLoader.createDisplayList(dispListIndex+4, texcoord);
+        }
+		
+        objLoader.setFilename(t);
+        if(objLoader.loadObj())
+        {
+            objLoader.createDisplayList(dispListIndex+5, texcoord);
+        }
+		
+        objLoader.setFilename(w);
+        if(objLoader.loadObj())
+        {
+            objLoader.createDisplayList(dispListIndex+6, texcoord);
         }
         loaded = true;
     }
@@ -77,7 +131,7 @@ public:
     virtual void draw()
     {
         if(!loaded) load();
-        GLCHECK(glUseProgram( (GLint)program ));
+       /* GLCHECK(glUseProgram( (GLint)program ));
 
         GLCHECK(glActiveTexture(GL_TEXTURE0));
 
@@ -86,25 +140,45 @@ public:
 
         // set the texture sampler id in shader to active texture unit number
         GLCHECK(glUniform1i(texture, 0));
+		*/
+		glCallList(0);
+		glCallList(1);
+		glCallList(2);
+		glCallList(3);
+		glCallList(4);
+		glCallList(6);
+		glPushMatrix();
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glRotatef(angle, 0.0f, -1.0f, -1.0f);		
         glPushMatrix();
-            glCallList(dispListIndex);
+		glCallList(5);
+		glPopMatrix();
+		glPopMatrix();
+		
+
+		glRotatef(angle, 0.0f, 1.0f, 1.0f);
+		glPushMatrix();
+		glCallList(7);
+		
+	//	glPopMatrix();
         glPopMatrix();
 
-        GLCHECK(glUseProgram( 0 ));
 
+    };
+
+	virtual void animate()
+    {
+		if (angle>10 || angle<-10)
+			increase=!increase;
+		if (increase)
+			angle+=0.05;
+		else
+			angle-=0.05;
     };
 
 
 private:
-
-    const std::string dragonOBJ = "models/THE_BEAST.obj";
-    const char* dragonTexture = "textures/Dragon_ground_color.jpg";
-
-    GLuint dispListIndex;
-
-    const char* texturePath = "textures/skybox.jpg";
+	GLuint dispListIndex;
 
     GLuint textureId;
 
@@ -116,8 +190,6 @@ private:
 
     // shader program
     ShaderProgram program;
-
-    bool loaded = false;
 
     // load a single texture file to associate with a Textureid
 };

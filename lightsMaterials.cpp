@@ -4,10 +4,10 @@
 # include "light.h"
 
 # ifndef __APPLE__
-#   include <GL/glew.h>
-#   include <GL/glut.h>
+#   include <glew.h>
+#   include <glut.h>
 # else
-#   include <GLUT/glut.h>
+#   include <glut.h>
 # endif
 
 // colour constants
@@ -52,8 +52,9 @@ LightsMaterials::LightsMaterials()
 
 void LightsMaterials::init(Viewer &v)
 {
-    (void)v;
-
+/*
+////    (void)v; для верности  ^^
+*/
     program.load("shaders/material.vert", "shaders/material.frag");
     GLCHECK( glUseProgram( program ) );
     GLCHECK( glUniform4fv( glGetUniformLocation( program, "light_1.ambient"  ), 1, &light_1.ambient.x ) );
