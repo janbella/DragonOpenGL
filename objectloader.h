@@ -8,8 +8,13 @@
 #include <QVector3D>
 #include <QVector2D>
 
+#ifdef WIN32
 #include <glew.h>
 #include <glut.h>
+#else
+#include <GL/glew.h>
+#include <GL/glut.h>
+#endif
 
 class ObjectLoader
 {

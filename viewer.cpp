@@ -1,11 +1,16 @@
 #include <QKeyEvent>
 
-#ifndef __APPLE__
-#include <glew.h>
-#include <glut.h>
+#ifdef __APPLE__
+#include <GL\glut.h>
 #else
-#include <glut.h>
+#ifdef WIN32
+#include <GL\glut.h>
+#else
+#include <GL/glew.h>
+#include <GL/glut.h>
 #endif
+#endif
+
 
 #include "viewer.h"
 #include "renderable.h"

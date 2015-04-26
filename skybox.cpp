@@ -79,8 +79,8 @@ void Skybox::drawSkyboxCube(float size)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
     glPushMatrix();
+    //glTranslatef(0,size,0);
     glRotatef(90,1,0,0);
-    glTranslatef(1,1,1);
     glScalef(size,size,size);
 
     GLfloat s0[] = {+0.5, -0.5, -0.5};

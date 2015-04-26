@@ -2,9 +2,13 @@
 #define TEMPORARYDRAGON
 
 #include <list>
+#ifdef WIN32
 #include <glew.h>
 #include <glut.h>
-
+#else
+#include <GL/glew.h>
+#include <GL/glut.h>
+#endif
 #include "renderable.h"
 #include "objectloader.h"
 #include "glCheck.h"
@@ -17,13 +21,13 @@ double angleChange = 0.1;
 bool increase = false;
 // the dragon model drawing and manipulating
 
-    const std::string bl = "dragon2/backleg.obj";
-	const std::string bll = "dragon2/backleg_left.obj";
-	const std::string l = "dragon2/leg.obj";
-	const std::string ll = "dragon2/leg_left.obj";
-	const std::string rw = "dragon2/wing.obj";
-	const std::string t = "dragon2/torso.obj";
-	const std::string w = "dragon2/right_wing.obj";
+    const std::string bl = "models/backleg.obj";
+    const std::string bll = "models/backleg_left.obj";
+    const std::string l = "models/leg.obj";
+    const std::string ll = "models/leg_left.obj";
+    const std::string rw = "models/wing.obj";
+    const std::string t = "models/torso.obj";
+    const std::string w = "models/right_wing.obj";
     const char* dragonTexture = "textures/Dragon_ground_color.jpg";
     const char* texturePath = "textures/skybox.jpg";
 	bool loaded = false;
@@ -133,7 +137,7 @@ public:
     virtual void draw()
     {
         if(!loaded) load();
-       /* GLCHECK(glUseProgram( (GLint)program ));
+        GLCHECK(glUseProgram( (GLint)program ));
 
         GLCHECK(glActiveTexture(GL_TEXTURE0));
 
@@ -142,7 +146,7 @@ public:
 
         // set the texture sampler id in shader to active texture unit number
         GLCHECK(glUniform1i(texture, 0));
-		*/
+
 		glCallList(0);
 		glCallList(1);
 		glCallList(2);
@@ -228,7 +232,9 @@ private:
     // shader program
     ShaderProgram program;
 
-    // load a single texture file to associate with a Textureid
+
+    bool loaded = false;
+
 };
 
 #endif // TEMPORARYDRAGON

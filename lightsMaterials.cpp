@@ -3,12 +3,19 @@
 # include "material.h"
 # include "light.h"
 
-# ifndef __APPLE__
+# ifdef __APPLE__
 #   include <glew.h>
 #   include <glut.h>
 # else
-#   include <glut.h>
-# endif
+#ifdef WIN32
+#include <glew.h>
+#include <glut.h>
+#else
+#include <GL/glew.h>
+#include <GL/glut.h>
+#endif
+#endif
+
 
 // colour constants
 static const Vector4 black( 0.0f, 0.0f, 0.0f, 1.0f );  // black colour
