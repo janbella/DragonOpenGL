@@ -15,7 +15,8 @@ bool _isAnimationStarted;
 Viewer::Viewer( const QGLFormat& format )
     : QGLViewer( format )
 {
-	setAnimationPeriod(10);
+	aP = 10;
+	setAnimationPeriod(aP);
 }
 
 Viewer::~Viewer()

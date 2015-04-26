@@ -13,6 +13,7 @@
 
 
 double angle = 0.0;
+double angleChange = 0.1;
 bool increase = false;
 // the dragon model drawing and manipulating
 
@@ -33,6 +34,7 @@ public:
 
     TemporaryDragon()
     {
+
         loaded = false;
     };
 
@@ -126,7 +128,7 @@ public:
 
 
     ~TemporaryDragon() {};
-
+	
     // inherited from Renderable, should be edited
     virtual void draw()
     {
@@ -171,10 +173,45 @@ public:
 		if (angle>10 || angle<-10)
 			increase=!increase;
 		if (increase)
-			angle+=0.05;
+			angle+=angleChange;
 		else
-			angle-=0.05;
+			angle-=angleChange;
     };
+
+	virtual void keyPressEvent(QKeyEvent* e, Viewer& v) {
+		if (e->key()==Qt::Key_W)
+			keyWPress();
+		else if (e->key()==Qt::Key_Space)
+			keySpacePress();
+		else if (e->key()==Qt::Key_A)
+			keyAPress();
+		else if (e->key()==Qt::Key_S)
+			keySPress();
+		else if (e->key()==Qt::Key_Plus)			
+		{
+			if (angleChange<0.7)
+			angleChange*=1.1;
+			
+		}
+		else if (e->key()==Qt::Key_Minus)
+		{
+			angleChange/=1.1;
+		}
+	};
+
+	void keyWPress(){
+	
+	};
+	void keySpacePress(){
+	
+	};
+	void keyAPress(){};
+	void keySPress(){};
+	void keyDPress(){};
+	void keyPlusPress(){
+	
+	};
+	void keyMinusPress(){};
 
 
 private:

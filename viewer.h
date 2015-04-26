@@ -18,6 +18,7 @@ class Viewer : public QGLViewer
 {
 
 public :
+	int aP;
     Viewer( const QGLFormat& format );
 
     virtual ~Viewer();
