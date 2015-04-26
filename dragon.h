@@ -1,69 +1,89 @@
-//#ifndef DRAGON_H
-//#define DRAGON_H
+#ifndef DRAGON_H
+#define DRAGON_H
 
-//#include <list>
-//#include <GL/glew.h>
-//#include <GL/glut.h>
+#include <list>
+#include <GL/glew.h>
+#include <GL/glut.h>
 
-//#include "renderable.h"
+#include "renderable.h"
+#include "shader.h"
 
-////#define USE_VBO
+//#define USE_VBO
 
-//// the dragon model drawing and manipulating
-//class Dragon : public Renderable
-//{
-//public:
-//    Dragon();
-//    ~Dragon();
+// the dragon model drawing and manipulating
+class Dragon : public Renderable
+{
+public:
+    Dragon();
+    ~Dragon();
 
-//    void init(Viewer&);
+    void init(Viewer&);
 
-//    // inherited from Renderable, should be edited
-//    virtual void draw();
+    // inherited from Renderable, should be edited
+    virtual void draw();
 
-//    // inherited from Renderable, should be edited
-//    virtual void animate();
+    // inherited from Renderable, should be edited
+    virtual void animate();
 
-//    // inherited from Renderable, should be edited
-//    virtual void keyPressEvent(QKeyEvent*, Viewer&);
+    // inherited from Renderable, should be edited
+    virtual void keyPressEvent(QKeyEvent*, Viewer&);
 
-//     // inherited from Renderable, should be edited
-//    virtual void mouseMoveEvent(QMouseEvent*, Viewer&);
+     // inherited from Renderable, should be edited
+    virtual void mouseMoveEvent(QMouseEvent*, Viewer&);
 
 
-//private:
-//    //const std::string headObj = "models/???";
-//    //const std::string neckObj = "models/???";
-//    const std::string bodyObj = "models/dragon_torso.obj";
-//    //const std::string tailObj = "models/???";
-//    const std::string leftWingObj = "models/left_wing.obj";
-//    const std::string rightWingObj = "models/wing_right.obj";
-//    const std::string leftFrontLegObj = "models/left_front_better.obj";
-//    const std::string rightFrontLegObj = "models/right_front_better.obj";
-//    const std::string leftBackLegObj = "models/back_left.obj";
-//    const std::string rightBackLegObj = "models/easyleg.obj";
+private:
+    //const std::string headObj = "models/???";
+    //const std::string neckObj = "models/???";
+    const std::string bodyObj = "models/torso.obj";
+    //const std::string tailObj = "models/???";
+    const std::string leftWingObj = "models/wing.obj";
+    const std::string rightWingObj = "models/right_wing.obj";
+    const std::string leftFrontLegObj = "models/leg_left.obj";
+    const std::string rightFrontLegObj = "models/leg.obj";
+    const std::string leftBackLegObj = "models/backleg_left.obj";
+    const std::string rightBackLegObj = "models/backleg.obj";
 
-//#define BODY 0
-//#define LEFTWING 1
-//#define RIGHTWING 2
-//#define LEFTFRONTLEG 3
-//#define RIGHTFRONTLEG 4
-//#define LEFTBACKLEG 5
-//#define RIGHTBACKLEG 6
+    const char* dragonTexture = "textures/Dragon_ground_color.jpg";
 
-//unsigned int numVBO;
+#define BODY 0
+#define LEFTWING 1
+#define RIGHTWING 2
+#define LEFTFRONTLEG 3
+#define RIGHTFRONTLEG 4
+#define LEFTBACKLEG 5
+#define RIGHTBACKLEG 6
 
-//GLuint vertVBOIndex;
-//GLuint normVBOIndex;
-//GLuint texVBOIndex;
+unsigned int numVBO;
 
-//std::vector<unsigned int> numVBOitems;
+GLuint vertVBOIndex;
+GLuint normVBOIndex;
+GLuint texVBOIndex;
 
-//GLuint dispListIndex;
+std::vector<unsigned int> numVBOitems;
 
-//void initDispLists();
+GLuint dispListIndex;
 
-//void initVBOs();
-//};
+void initDispLists();
 
-//#endif // DRAGON_H
+void initVBOs();
+
+GLuint loadTexture(const char *filename);
+
+bool loaded = false;
+
+const char* texturePath = "textures/skybox.jpg";
+
+GLuint textureId;
+
+// texture unit shader binding
+GLint texture;
+
+// texture coordinate bindings
+GLint texcoord;
+
+// shader program
+ShaderProgram program;
+};
+
+#endif // DRAGON_H
