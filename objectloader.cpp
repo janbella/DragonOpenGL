@@ -114,10 +114,6 @@ bool ObjectLoader::loadObj()
             file >> triangle.v2 >> slash >> triangle.t2 >> slash >> triangle.n2;
             file >> triangle.v3 >> slash >> triangle.t3 >> slash >> triangle.n3;
 
-           // file >> triangle.v1 >> slash >> slash >> triangle.n1;
-           // file >> triangle.v2 >> slash >> slash >> triangle.n2;
-           // file >> triangle.v3 >> slash >> slash >> triangle.n3;
-
             faces.push_back(triangle);
         }
         else
@@ -135,7 +131,7 @@ bool ObjectLoader::loadObj()
 
 void ObjectLoader::createDisplayList(GLuint index, GLint shaderTexCoord)
 {
-    if(vertices.empty() || normals.empty() /*|| texCoords.empty()*/)
+    if(vertices.empty() || normals.empty() || texCoords.empty())
     {
         std::cerr << "Cannot create display list - first need to load vertices, normals and textures!" << std::endl;
     }

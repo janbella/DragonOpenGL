@@ -2,7 +2,6 @@
 #include "viewer.h"
 #include "lightsMaterials.h"
 #include "geometryprimitives.h"
-#include "textures.h"
 #include "dragon.h"
 #include "skybox.h"
 //#include "temporarydragon.h"
@@ -25,8 +24,7 @@ int main(int argc, char** argv)
     viewer.setWindowTitle("viewer");
 
     // build your scene here
-    //viewer.addRenderable(new Textures());
-    //viewer.addRenderable(new Skybox());
+    viewer.addRenderable(new Skybox());
     //viewer.addRenderable(new LightsMaterials());
 
     viewer.addRenderable(new Dragon());

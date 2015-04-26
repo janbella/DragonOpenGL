@@ -119,7 +119,6 @@ private:
 
     bool loaded = false;
 
-    // load a single texture file to associate with a Textureid
 };
 
 #endif // TEMPORARYDRAGON

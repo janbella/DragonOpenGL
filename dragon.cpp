@@ -130,6 +130,7 @@ void Dragon::initVBOs()
 
 Dragon::~Dragon()
 {
+
 }
 
 // inherited from Renderable, should be edited
@@ -163,17 +164,17 @@ void Dragon::draw()
 
 
 
-#ifdef USE_VBO
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+//#ifdef USE_VBO
+//    glEnableClientState(GL_VERTEX_ARRAY);
+//    glEnableClientState(GL_NORMAL_ARRAY);
+//    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-    glDrawArrays(GL_TRIANGLES , 0, numVBO);
+//    glDrawArrays(GL_TRIANGLES , 0, numVBO);
 
-    glDisableClientState(GL_COLOR_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-#endif
+//    glDisableClientState(GL_COLOR_ARRAY);
+//    glDisableClientState(GL_NORMAL_ARRAY);
+//    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+//#endif
 }
 
 // inherited from Renderable, should be edited
