@@ -9,6 +9,9 @@
 
 #include "shader.h"
 #include "renderable.h"
+#include "light.h"
+#include "material.h"
+#include "vector4.h"
 
 
 
@@ -57,7 +60,23 @@ private:
     ShaderProgram textureShader;
     ShaderProgram materialShader;
 
+    // colour constants
+    const  Vector4 black = Vector4( 0.0f, 0.0f, 0.0f, 1.0f );  // black colour
+    const  Vector4 white = Vector4( 1.0f, 1.0f, 1.0f, 1.0f );  // white colour
+    const  Vector4 red = Vector4( 1.0f, 0.0f, 0.0f, 1.0f );    // red colour
 
+    Light light_1 = Light( Vector4( 000, 300, 000, 1 ), white, white, white );
+    Light light_2 = Light( Vector4( 0.0f, 0.0f, 0.0f, 1.0f ), black, red, red );
+
+    // fields for materials
+    const Vector4 mat_ambient = Vector4( 0.7f, 0.7f, 0.7f, 1.0f );  // ambient material
+    const Vector4 mat_diffuse = Vector4( 0.2f, 0.2f, 0.8f, 1.0f );
+
+    const float no_shininess = ( 0.0f );
+    const float low_shininess = ( 5.0f );
+    const float high_shininess = ( 50.0f );
+
+    const Material waterMaterial = Material(mat_ambient, mat_diffuse, white, high_shininess);
 };
 
 #endif // SCENE_H

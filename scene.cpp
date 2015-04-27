@@ -20,6 +20,27 @@ void Scene::init(Viewer&)
     Texturing::init(textureGrassPath,&textureShader,&textureGrass,&texture0,&texcoord0);
     Texturing::init(textureTreePath,&textureShader,&textureTree,&texture0,&texcoord0);
     Texturing::init(textureFlowersPath,&textureShader,&textureFlowers,&texture1,&texcoord1);
+
+    materialShader.load("shaders/material.vert", "shaders/material.frag");
+    GLCHECK( glUseProgram( materialShader ) );
+    GLCHECK( glUniform4fv( glGetUniformLocation( materialShader, "light_1.ambient"  ), 1, &light_1.ambient.x ) );
+    GLCHECK( glUniform4fv( glGetUniformLocation( materialShader, "light_1.diffuse"  ), 1, &light_1.diffuse.x ) );
+    GLCHECK( glUniform4fv( glGetUniformLocation( materialShader, "light_1.specular" ), 1, &light_1.specular.x ) );
+    GLCHECK( glUniform4fv( glGetUniformLocation( materialShader, "light_1.position" ), 1, &light_1.position.x ) );
+
+    GLCHECK( glUniform1i ( glGetUniformLocation( materialShader, "enabled_light2"   ), true));
+    GLCHECK( glUniform4fv( glGetUniformLocation( materialShader, "light_2.ambient"  ), 1, &light_2.ambient.x ) );
+    GLCHECK( glUniform4fv( glGetUniformLocation( materialShader, "light_2.diffuse"  ), 1, &light_2.diffuse.x ) );
+    GLCHECK( glUniform4fv( glGetUniformLocation( materialShader, "light_2.specular" ), 1, &light_2.specular.x ) );
+    GLCHECK( glUniform4fv( glGetUniformLocation( materialShader, "light_2.position" ), 1, &light_2.position.x ) );
+
+    GLCHECK( glUseProgram(0));
+
+    glEnable(GL_LIGHTING);
+    // disable the default qglviewer light !!
+    glDisable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
+    glClearColor(0.0f, 0.1f, 0.1f, 0.0f);
 }
 
 
@@ -32,13 +53,13 @@ void Scene::draw()
 
     glPushMatrix();
         glTranslatef(200,0,200);
-        drawLake(100,180);
+        drawLake(150,180);
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(-400,0,-80);
+    glTranslatef(-450,0,-460);
     glScalef(3,6,3);
-    drawForest(15, 20);
+    drawForest(17, 33);
     glPopMatrix();
 
 }
@@ -114,12 +135,22 @@ void Scene::drawGrassPlane(float s)
 
 void Scene::drawLake(float r, float precision)
 {
-    glNormal3f(0.0, 1.0, 0.0);
+    GLCHECK( glUseProgram( materialShader ) );
+    GLCHECK( glUniform4fv( glGetUniformLocation( materialShader, "light_1.position" ), 1, &light_1.position.x ) );
+    GLCHECK( glUniform4fv( glGetUniformLocation( materialShader, "light_2.position" ), 1, &light_2.position.x ) );
+
+    glDisable(GL_COLOR_MATERIAL);
+
+    GLCHECK( glUniform4fv( glGetUniformLocation( materialShader, "material.ambient" ), 1, &waterMaterial.ambient.x ) );
+    GLCHECK( glUniform4fv( glGetUniformLocation( materialShader, "material.diffuse" ), 1, &waterMaterial.diffuse.x ) );
+    GLCHECK( glUniform4fv( glGetUniformLocation( materialShader, "material.specular" ), 1, &waterMaterial.specular.x ) );
+    GLCHECK( glUniform1f(  glGetUniformLocation( materialShader, "material.shininess" ), waterMaterial.shininess ) );
+
+
     float height = 0.11;
 
-
     glBegin(GL_TRIANGLE_FAN);
-        glNormal3f(0.0f,0.0f,1.0f);
+        glNormal3f(0.0f,1.0f,0.0f);
         glVertex3f(0.0f,height,0.0f);
         glVertex3f(0.5f,height,0.0f);
 
@@ -127,11 +158,14 @@ void Scene::drawLake(float r, float precision)
 
         for(float i = 1;i<=precision+1;i++)
         {
-            glNormal3f(0.0f,0.0f,1.0f);
+            glNormal3f(0.0f,1.0f,0.0f);
             glVertex3f((cos((2.0f*M_PI/precision)*i))*r,height,(sin((2.0f*M_PI/precision)*i))*r);
         }
     glEnd();
 
+    glEnable(GL_COLOR_MATERIAL);
+
+    GLCHECK( glUseProgram(0) );
 }
 
 
