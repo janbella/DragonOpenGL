@@ -33,6 +33,11 @@ const std::vector<QVector2D>& ObjectLoader::getTexCoords() const
     return texCoords;
 }
 
+const std::vector<QVector3D>& ObjectLoader::getSkeleton() const
+{
+    return skeleton;
+}
+
 void ObjectLoader::setFilename(const std::string& filename)
 {
     this->filename = filename;
@@ -59,11 +64,13 @@ bool ObjectLoader::loadObj()
     normals.clear();
     texCoords.clear();
     faces.clear();
+    skeleton.clear();
 
     // Indices of vertices in obj file starts with 1, not zero
     vertices.push_back(QVector3D());
     normals.push_back(QVector3D());
     texCoords.push_back(QVector2D());
+    skeleton.push_back(QVector2D());
 
     while (!file.fail())
     {
@@ -115,6 +122,18 @@ bool ObjectLoader::loadObj()
             file >> triangle.v3 >> slash >> triangle.t3 >> slash >> triangle.n3;
 
             faces.push_back(triangle);
+        }
+        else if (line_type =="k")
+        {
+            QVector3D vertex;
+            float number = 0;
+            file >> number;
+            vertex.setX(number);
+            file >> number;
+            vertex.setY(number);
+            file >> number;
+            vertex.setZ(number);
+            skeleton.push_back(vertex);
         }
         else
         {

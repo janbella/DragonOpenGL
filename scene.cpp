@@ -15,7 +15,7 @@ Scene::~Scene()
 
 }
 
-void Scene::init(Viewer&)
+void Scene::init(Viewer& v)
 {
     Texturing::init(textureGrassPath,&textureShader,&textureGrass,&texture0,&texcoord0);
     Texturing::init(textureTreePath,&textureShader,&textureTree,&texture0,&texcoord0);
@@ -52,6 +52,8 @@ void Scene::init(Viewer&)
     glFogfv (GL_FOG_COLOR, fogColor);
     glFogf (GL_FOG_DENSITY, density);
     glHint (GL_FOG_HINT, GL_NICEST);
+
+    rain.init(v);
 }
 
 
@@ -73,12 +75,13 @@ void Scene::draw()
     drawForest(17, 33);
     glPopMatrix();
 
+    rain.draw();
 }
 
 
 void Scene::animate()
 {
-
+    rain.animate();
 }
 
 

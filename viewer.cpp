@@ -10,10 +10,12 @@
 #include "viewer.h"
 #include "renderable.h"
 
+bool _isAnimationStarted;
+
 Viewer::Viewer( const QGLFormat& format )
     : QGLViewer( format )
 {
-
+    setAnimationPeriod(100);
 }
 
 Viewer::~Viewer()
@@ -67,6 +69,17 @@ void Viewer::init()
         (*it)->init(*this);
     }
 
+    glClearColor(0.5, 0.5, 0.5, 1);
+    glClearDepth(1);
+    GLfloat density = 0.3;
+    GLfloat fogColor[4] = {0.5, 0.5, 0.5, 1.0};
+    glEnable (GL_DEPTH_TEST);
+    glEnable (GL_FOG);
+    glFogi (GL_FOG_MODE, GL_EXP2);
+    glFogfv (GL_FOG_COLOR, fogColor);
+    glFogf (GL_FOG_DENSITY, density);
+    glHint (GL_FOG_HINT, GL_NICEST);
+
 }
 
 
@@ -76,6 +89,11 @@ void Viewer::draw()
     for (std::list<Renderable *>::iterator it = renderableList.begin(), end = renderableList.end(); it != end; ++ it )
     {
         (*it)->draw();
+        if (!_isAnimationStarted)
+        {
+        startAnimation();
+        _isAnimationStarted = true;
+        }
     }
 }
 
@@ -148,6 +166,17 @@ void Viewer::keyPressEvent(QKeyEvent *e)
     updateGL();
 }
 
+void Viewer::keyReleaseEvent(QKeyEvent* e, Viewer&)
+{
+    // Get event modifiers key
+    const Qt::KeyboardModifiers modifiers = e->modifiers();
+
+    // all renderables may respond to key events
+    for (std::list<Renderable *>::iterator it = renderableList.begin(), end = renderableList.end(); it != end; ++ it )
+    {
+        (*it)->keyReleaseEvent(e, *this);
+    }
+}
 
 QString Viewer::helpString() const
 {

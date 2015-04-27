@@ -12,6 +12,7 @@
 #include "light.h"
 #include "material.h"
 #include "vector4.h"
+#include "rain.h"
 
 
 
@@ -77,6 +78,8 @@ private:
     const float high_shininess = ( 50.0f );
 
     const Material waterMaterial = Material(mat_ambient, mat_diffuse, white, high_shininess);
+
+    Rain rain;
 };
 
 #endif // SCENE_H

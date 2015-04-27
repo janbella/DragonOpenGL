@@ -18,6 +18,7 @@ private:
     std::vector<QVector3D> normals;
     std::vector<QVector2D> texCoords;
     std::vector<Triangle> faces;
+    std::vector<QVector3D> skeleton;
     std::string filename;
 public:
 
@@ -34,6 +35,8 @@ public:
     const std::vector<QVector3D>& getVertices() const;
     const std::vector<QVector3D>& getNormals() const;
     const std::vector<QVector2D>& getTexCoords() const;
+    const std::vector<QVector3D>& getSkeleton() const;
+
 
     ~ObjectLoader();
 };

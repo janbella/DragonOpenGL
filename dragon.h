@@ -29,6 +29,8 @@ public:
     // inherited from Renderable, should be edited
     virtual void keyPressEvent(QKeyEvent*, Viewer&);
 
+    virtual void keyReleaseEvent(QKeyEvent*, Viewer&);
+
      // inherited from Renderable, should be edited
     virtual void mouseMoveEvent(QMouseEvent*, Viewer&);
 
@@ -47,13 +49,13 @@ private:
 
     const char* dragonTexture = "textures/Dragon_ground_color.jpg";
 
-#define BODY 0
-#define LEFTWING 1
-#define RIGHTWING 2
+#define BODY 5
+#define LEFTWING 4
+#define RIGHTWING 6
 #define LEFTFRONTLEG 3
-#define RIGHTFRONTLEG 4
-#define LEFTBACKLEG 5
-#define RIGHTBACKLEG 6
+#define RIGHTFRONTLEG 2
+#define LEFTBACKLEG 1
+#define RIGHTBACKLEG 0
 
 unsigned int numVBO;
 
@@ -97,6 +99,36 @@ bool toggleFire = false;
 // xyz give coordinates, w time to live
 std::vector<Particles*> smokeParticles;
 std::vector<Particles*> fireParticles;
+
+/// FOR ANIMATION
+double go = 0;
+int timer;
+int counter = -50;
+double testscale = 1;
+double angle = 0.0;
+double angle_ = 0.0;
+double angleChange = 0.2;
+bool increase = false;
+bool up = false;
+bool up_ = false;
+double flight = 0.0;
+double shift = 0.0;
+double speed = 2.0;
+bool r = false;
+bool f = false;
+bool fall = false;
+bool s = false;
+int step  = 0;
+
+GLuint changedDispListId = 0;
+
+const std::string cylinder = "models/backleg_skeleton.obj";
+const std::string cylinder2 = "models/backleg_left_skeleton.obj";
+
+double meaning(std::vector<QVector3D> skeleton,std::vector<QVector3D> verticesNew,float ytemp);
+
+double meaning(std::vector<QVector3D> skeleton,std::vector<QVector3D> verticesNew,float ytemp,float ztemp);
+
 };
 
 #endif // DRAGON_H

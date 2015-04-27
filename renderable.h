@@ -41,6 +41,12 @@ public:
     virtual void keyPressEvent(QKeyEvent*, Viewer&) {};
 
     /**
+     * @brief keyReleaseEvent responding to key release
+     * Default behavior: nothing is done
+     */
+    virtual void keyReleaseEvent(QKeyEvent*, Viewer&) {};
+
+    /**
      * Objects can respond to mouse events.
      * Default behavior: nothing is done.
      */

@@ -45,6 +45,8 @@ protected :
     // Handle keyboard events specifically
     virtual void keyPressEvent(QKeyEvent *e);
 
+    virtual void keyReleaseEvent(QKeyEvent*, Viewer&);
+
     // Handle keyboard events specifically
     virtual void mouseMoveEvent(QMouseEvent *e);
 
