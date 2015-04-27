@@ -143,6 +143,8 @@ void Viewer::keyPressEvent(QKeyEvent *e)
         // if the event is not handled here, process it as default
         QGLViewer::keyPressEvent(e);
     }
+
+
     updateGL();
 }
 

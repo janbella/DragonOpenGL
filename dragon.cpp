@@ -7,17 +7,45 @@
 #include <QImage>
 #include <QGLWidget>
 #include <QVector4D>
+#include <cmath>
 
 Dragon::Dragon()
 {
     loaded = false;
-    part.reserve(100);
+    smokeParticlesEnabledCount = 0;
+
+    smokeParticles.reserve(20);
+
+    while(smokeParticles.size()<20)
+    {
+        smokeParticles.push_back(new Particles(smokeTex,1.5,0.005,0.005, 0.2, false));
+    }
+
+    fireParticles.reserve(60);
+    while(fireParticles.size()<60)
+    {
+        fireParticles.push_back(new Particles(fireTex,20,0.05,0.005,1, true));
+    }
+
+    toggleFire = false;
+
+
 }
 
-void Dragon::init(Viewer& )
+void Dragon::init(Viewer& v)
 {
     // load textures
     Texturing::init(dragonTexture,&program,&textureId,&texture,&texcoord);
+
+    for(Particles* p : smokeParticles)
+    {
+        p->init(v);
+    }
+
+    for(Particles* p : fireParticles)
+    {
+        p->init(v);
+    }
 }
 
 
@@ -122,11 +150,17 @@ void Dragon::initVBOs()
 
 Dragon::~Dragon()
 {
-    for(Particles* p : part)
+    for(Particles* p : smokeParticles)
     {
         delete p;
     }
-    part.clear();
+    smokeParticles.clear();
+
+    for(Particles* p : fireParticles)
+    {
+        delete p;
+    }
+    fireParticles.clear();
 }
 
 // inherited from Renderable, should be edited
@@ -145,6 +179,8 @@ void Dragon::draw()
 
     GLCHECK(glUniform1i(texture, 0));
 
+    glPushMatrix();
+    glRotatef(90,0,1,0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     for(size_t i =0;i<8;i++)
     {
@@ -156,6 +192,23 @@ void Dragon::draw()
     }
 
     GLCHECK(glUseProgram( 0 ));
+
+    glPushMatrix();
+    glTranslatef(0,10,10);
+    for(int i = 0; i< fmin(smokeParticles.size(), abs(smokeParticlesEnabledCount));i++)
+    {
+        smokeParticles[i]->draw();
+    }
+    if(toggleFire)
+    {
+        //glRotatef(90,1,0,0);
+        for(int i = 0; i< fmin(fireParticles.size(), abs(fireParticlesEnabledCount));i++)
+        {
+            fireParticles[i]->draw();
+        }
+    }
+    glPopMatrix();
+    glPopMatrix();
 
 
 
@@ -175,24 +228,59 @@ void Dragon::draw()
 // inherited from Renderable, should be edited
 void Dragon::animate()
 {
-    if(part.size()<100)
+
+        if(smokeParticlesEnabledCount<smokeParticles.size())
+            smokeParticlesEnabledCount += 0.2;
+        else
+            smokeParticlesEnabledCount = -smokeParticlesEnabledCount;
+
+        if(toggleFire)
+        {
+        if(fireParticlesEnabledCount<fireParticles.size())
+            fireParticlesEnabledCount += 0.5;
+        }
+
+    for(int i = 0; i< fmin(smokeParticles.size(), abs(smokeParticlesEnabledCount));i++)
     {
-        part.push_back(new Particles());
+        smokeParticles[i]->animate();
     }
-    for(Particles* p : part)
+
+    if(toggleFire)
     {
-        p->animate();
+    for(int i = 0; i< fmin(fireParticles.size(), (int)(fireParticlesEnabledCount));i++)
+    {
+        fireParticles[i]->animate();
+    }
     }
 }
 
 
 // inherited from Renderable, should be edited
-void Dragon::keyPressEvent(QKeyEvent*, Viewer&)
+void Dragon::keyPressEvent(QKeyEvent* e, Viewer&)
 {
+    const Qt::KeyboardModifiers modifiers = e->modifiers();
+
+    if ((e->key()==Qt::Key_F) && (modifiers==Qt::NoButton) && e->KeyPress)
+    {
+        toggleFire = !toggleFire;
+        std::cout << "Fire toggled" << std::endl;
+        if(!toggleFire)
+        {
+            for(Particles* p : fireParticles)
+            {
+                p->setPosition(0,0,0);
+            }
+            fireParticlesEnabledCount = 0;
+        }
+    }
 }
 
 
 // inherited from Renderable, should be edited
-void Dragon::mouseMoveEvent(QMouseEvent*, Viewer&)
+void Dragon::mouseMoveEvent(QMouseEvent* event, Viewer&)
 {
+    /*if(event->KeyPress)
+    {
+        std::cout << "Mouse pressed" << std::endl;
+    }*/
 }

@@ -75,6 +75,9 @@ bool loaded = false;
 
 const char* texturePath = "textures/Dragon_ground_color.jpg";
 
+const char* smokeTex = "textures/smoke.png";
+const char* fireTex = "textures/fire.png";
+
 GLuint textureId;
 
 // texture unit shader binding
@@ -86,9 +89,14 @@ GLint texcoord;
 // shader program
 ShaderProgram program;
 
+float smokeParticlesEnabledCount = 0;
+float fireParticlesEnabledCount = 0;
+
+bool toggleFire = false;
 
 // xyz give coordinates, w time to live
-std::vector<Particles*> part;
+std::vector<Particles*> smokeParticles;
+std::vector<Particles*> fireParticles;
 };
 
 #endif // DRAGON_H

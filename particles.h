@@ -13,12 +13,12 @@
 #include "glCheck.h"
 #include "shader.h"
 
-
+static GLuint partDispList = 0;
 
 class Particles : public Renderable
 {
 public:
-    Particles();
+    Particles(const char* texturePath, float ydistance, float xspread, float zspread, float scaleSize, bool fireOrSmoke);
     ~Particles();
 
     virtual void init(Viewer&);
@@ -42,15 +42,19 @@ private:
     GLint texture;
     GLint texCoords;
 
-    bool loaded = false;
-
-    GLuint partDispList;
+    //bool loaded = false;
 
     void createDispList();
 
     float x = 0;
     float y = 0;
     float z = 0;
+
+    float xspread;
+    float zspread;
+    float ydistance;
+    float scaleSize;
+    bool fire;
 
     int id;
 };
