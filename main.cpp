@@ -28,7 +28,7 @@ int main(int argc, char** argv)
     viewer.addRenderable(new Skybox());
     viewer.addRenderable(new Dragon());
     viewer.addRenderable(new Scene());
-    //viewer.addRenderable(new Bezier5());
+    viewer.addRenderable(new Bezier5(5.0));
 
     // Make the viewer window visible on screen.
     viewer.show(); // this function will create the GL context

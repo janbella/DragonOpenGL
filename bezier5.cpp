@@ -16,7 +16,8 @@ Bezier5::~Bezier5()
 
 void Bezier5::draw()
 {
-    glColor3f(1,0,1);
+    glTranslatef(0.0,30.0,0.0);
+    glColor3f(1,1,1);
 
     int LOD = 80;
     // we will draw lots of little lines to make our curve
@@ -77,7 +78,7 @@ void Bezier5::draw()
     glEnd();
 
     // draw the Control Vertices
-    glColor3f(0,1,0);
+    glColor3f(1,1,1);
     glPointSize(3);
     glBegin(GL_POINTS);
     for(int i=0;i!=6;++i) {
