@@ -31,7 +31,9 @@ double shift = 0.0;
 double speed = 2.0;
 bool r = false;
 bool f = false;
+bool s = false;
 bool fall = false;
+int step = 0;
 // the dragon model drawing and manipulating
 
 
@@ -152,7 +154,7 @@ public:
 
 	virtual void init(Viewer&)
 	{
-
+		
 		// load textures
 		textureId = loadTexture(dragonTexture);
 
@@ -181,8 +183,29 @@ public:
 	// inherited from Renderable, should be edited
 	virtual void draw()
 	{
+		if (s)
+		{
+		//	glPushMatrix();
+			if (step>360)
+			{
+				s=!s;
+				step = 0;
+				
+			}
+		glRotatef(step,1.0,0.0,0.0);
+		//glRotatef(step,0.0,1.0,0);
+		glCallList(0);
+		glCallList(1);
+		glCallList(2);
+		glCallList(3);
+		glCallList(4);
+		glCallList(5);
+		glCallList(6);
+		glCallList(7);
+		//glPopMatrix();
+		}
 
-		if (f || fall)
+	    if (f || fall)
 		{
 		glTranslatef(0.0,flight,0.0);
 		
@@ -284,9 +307,10 @@ public:
 	
 	virtual void animate()
 	{
+		if (s)
+			step+=5;
 
-
-		if (f)
+		else	if (f)
 		{
 			timer++;
 			if (flight<10)
@@ -319,7 +343,7 @@ public:
 				timer = 0;}
 			
 		}
-		if (r){
+		else if (r){
 			go+=0.1;
 			if (shift>0.2 || shift<-0)
 				up=!up;
@@ -596,8 +620,9 @@ public:
 		}
 		else if (e->key()==Qt::Key_A)
 			keyAPress();
-		else if (e->key()==Qt::Key_S)
-			keySPress();
+		else if (e->key()==Qt::Key_S){
+						
+				s=!s;}
 		else if (e->key()==Qt::Key_Plus)			
 		{
 			if (angleChange<0.5)
