@@ -1,14 +1,19 @@
 #ifndef PARTICLES_H
 #define PARTICLES_H
 
-#include "dragon.h"
+#include <GL/glew.h>
+
+#include <QImage>
+#include <QGLWidget>
+#include <QVector4D>
+#include <vector>
+
 #include "geometryprimitives.h"
 #include "objectloader.h"
 #include "glCheck.h"
 #include "shader.h"
 
-#include <QImage>
-#include <QGLWidget>
+
 
 class Particles : public Renderable
 {
@@ -26,8 +31,10 @@ public:
 
     virtual void mouseMoveEvent(QMouseEvent*, Viewer&);
 
+    void setPosition(float x, float y, float z);
+
 private:
-    const char* filename = "textures/tree.png";
+    const char* filename = "textures/smoke.png";
 
     ShaderProgram program;
 
@@ -40,6 +47,12 @@ private:
     GLuint partDispList;
 
     void createDispList();
+
+    float x = 0;
+    float y = 0;
+    float z = 0;
+
+    int id;
 };
 
 #endif // PARTICLES_H

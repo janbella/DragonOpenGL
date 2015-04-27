@@ -6,10 +6,12 @@
 
 #include <QImage>
 #include <QGLWidget>
+#include <QVector4D>
 
 Dragon::Dragon()
 {
     loaded = false;
+    part.reserve(100);
 }
 
 void Dragon::init(Viewer& )
@@ -120,7 +122,11 @@ void Dragon::initVBOs()
 
 Dragon::~Dragon()
 {
-
+    for(Particles* p : part)
+    {
+        delete p;
+    }
+    part.clear();
 }
 
 // inherited from Renderable, should be edited
@@ -144,6 +150,7 @@ void Dragon::draw()
     {
         glPushMatrix();
         glRotatef(0,0,1,0);
+        glScalef(2,2,2);
             glCallList(this->dispListIndex + i);
         glPopMatrix();
     }
@@ -168,7 +175,14 @@ void Dragon::draw()
 // inherited from Renderable, should be edited
 void Dragon::animate()
 {
-
+    if(part.size()<100)
+    {
+        part.push_back(new Particles());
+    }
+    for(Particles* p : part)
+    {
+        p->animate();
+    }
 }
 
 

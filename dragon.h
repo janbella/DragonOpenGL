@@ -7,6 +7,7 @@
 
 #include "renderable.h"
 #include "shader.h"
+#include "particles.h"
 
 //#define USE_VBO
 
@@ -84,6 +85,10 @@ GLint texcoord;
 
 // shader program
 ShaderProgram program;
+
+
+// xyz give coordinates, w time to live
+std::vector<Particles*> part;
 };
 
 #endif // DRAGON_H

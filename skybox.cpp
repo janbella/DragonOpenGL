@@ -46,7 +46,7 @@ void Skybox::drawSkyboxCube(float size)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
     glPushMatrix();
-    //glTranslatef(0,size,0);
+    glTranslatef(0,size/2,0);
     glRotatef(90,1,0,0);
     glScalef(size,size,size);
 
@@ -136,6 +136,6 @@ void Skybox::drawSkyboxCube(float size)
 void Skybox::draw()
 {
     GLCHECK(glUseProgram( (GLint)program ));
-    drawSkyboxCube(100);
+    drawSkyboxCube(1000);
     GLCHECK(glUseProgram( 0 ));
 }

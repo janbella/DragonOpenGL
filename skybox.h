@@ -35,7 +35,7 @@ private:
     ShaderProgram program;
 
     // draw a quad centered in the XY place (z=0), of size s
-    void drawSkyboxCube(float size = 100.0);
+    void drawSkyboxCube(float size = 1000.0);
 };
 
 #endif // SKYBOX_H

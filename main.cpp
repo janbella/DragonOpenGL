@@ -3,7 +3,8 @@
 #include "geometryprimitives.h"
 #include "dragon.h"
 #include "skybox.h"
-//#include "particles.h"
+#include "particles.h"
+#include "scene.h"
 
 #include <iostream>
 #include <qapplication.h>
@@ -25,7 +26,8 @@ int main(int argc, char** argv)
     // build your scene here
     viewer.addRenderable(new Skybox());
     viewer.addRenderable(new Dragon());
-    //   viewer.addRenderable(new Particles());
+    //viewer.addRenderable(new Particles(-1));
+    viewer.addRenderable(new Scene());
 
     // Make the viewer window visible on screen.
     viewer.show(); // this function will create the GL context
