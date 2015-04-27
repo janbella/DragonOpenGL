@@ -13,7 +13,7 @@ bool _isAnimationStarted;
 Viewer::Viewer( const QGLFormat& format )
     : QGLViewer( format )
 {
-	aP = 50;
+	aP = 100;
 	setAnimationPeriod(aP);
 }
 
@@ -127,7 +127,7 @@ void Viewer::keyPressEvent(QKeyEvent *e)
         (*it)->keyPressEvent(e, *this);
     }
 
-    if ((e->key()==Qt::Key_W) && (modifiers==Qt::NoButton))
+  /*  if ((e->key()==Qt::Key_W) && (modifiers==Qt::NoButton))
     {
         // events with modifiers: CTRL+W, ALT+W, ... to handle separately
         toogleWireframe = !toogleWireframe;
@@ -150,7 +150,7 @@ void Viewer::keyPressEvent(QKeyEvent *e)
     {
         // if the event is not handled here, process it as default
         QGLViewer::keyPressEvent(e);
-    }
+    }*/
     updateGL();
 }
 

@@ -2,6 +2,7 @@
 #define OBJECTLOADER_H
 
 #include "triangle.h"
+#include "SkeletonCoordinates.h"
 
 #include <vector>
 #include <string>
@@ -23,6 +24,7 @@ private:
     std::vector<QVector3D> normals;
     std::vector<QVector2D> texCoords;
     std::vector<Triangle> faces;
+	std::vector<QVector3D> skeleton;
     std::string filename;
 public:
 
@@ -32,6 +34,8 @@ public:
     bool loadObj();
 
     void createDisplayList(GLuint index, GLint shaderTexCoord);
+	void ObjectLoader::createDisplayListAnilam(GLuint index, GLint shaderTexCoord, std::vector<QVector3D> vertices,std::vector<QVector3D> normals,std::vector<QVector2D> texCoords,std::vector<Triangle> faces );
+
 
     unsigned int createVBO(GLuint verticesBO, GLuint normalsBO, GLuint textCoordsBO);
 
@@ -39,6 +43,8 @@ public:
     const std::vector<QVector3D>& getVertices() const;
     const std::vector<QVector3D>& getNormals() const;
     const std::vector<QVector2D>& getTexCoords() const;
+	const std::vector<QVector3D>& getSkeleton() const;
+	
 
     ~ObjectLoader();
 };

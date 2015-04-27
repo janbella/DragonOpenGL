@@ -1,5 +1,5 @@
 #include "objectloader.h"
-
+#include "skeletoncoordinates.h"
 #include <fstream>
 #include <string>
 #include <vector>
@@ -23,6 +23,8 @@ const std::vector<QVector3D>& ObjectLoader::getVertices() const
     return vertices;
 }
 
+
+
 const std::vector<QVector3D>& ObjectLoader::getNormals() const
 {
     return normals;
@@ -31,6 +33,11 @@ const std::vector<QVector3D>& ObjectLoader::getNormals() const
 const std::vector<QVector2D>& ObjectLoader::getTexCoords() const
 {
     return texCoords;
+}
+
+const std::vector<QVector3D>& ObjectLoader::getSkeleton() const
+{
+	return skeleton;
 }
 
 void ObjectLoader::setFilename(const std::string& filename)
@@ -59,11 +66,13 @@ bool ObjectLoader::loadObj()
     normals.clear();
     texCoords.clear();
     faces.clear();
+	skeleton.clear();
 
     // Indices of vertices in obj file starts with 1, not zero
     vertices.push_back(QVector3D());
     normals.push_back(QVector3D());
     texCoords.push_back(QVector2D());
+	skeleton.push_back(QVector3D());
 
     while (!file.fail())
     {
@@ -116,6 +125,19 @@ bool ObjectLoader::loadObj()
 
             faces.push_back(triangle);
         }
+
+		else if (line_type =="k")
+		{	
+			QVector3D vertex;
+            float number = 0;
+            file >> number;
+            vertex.setX(number);
+            file >> number;
+            vertex.setY(number);
+            file >> number;
+            vertex.setZ(number);
+			skeleton.push_back(vertex);
+		}
         else
         {
             // Nothing here
@@ -145,15 +167,15 @@ void ObjectLoader::createDisplayList(GLuint index, GLint shaderTexCoord)
     for(std::vector<Triangle>::const_iterator iter = faces.cbegin(); iter!=faces.cend();iter++)
     {
         glNormal3f(normals[iter->n1].x(),normals[iter->n1].y(),normals[iter->n1].z());
-        glVertexAttrib2f(shaderTexCoord, texCoords[iter->t1].x(),texCoords[iter->t1].y());
+       // glVertexAttrib2f(shaderTexCoord, texCoords[iter->t1].x(),texCoords[iter->t1].y());
         glVertex3f(vertices[iter->v1].x(),vertices[iter->v1].y(),vertices[iter->v1].z());
 
         glNormal3f(normals[iter->n2].x(),normals[iter->n2].y(),normals[iter->n2].z());
-        glVertexAttrib2f(shaderTexCoord, texCoords[iter->t2].x(),texCoords[iter->t2].y());
+        //glVertexAttrib2f(shaderTexCoord, texCoords[iter->t2].x(),texCoords[iter->t2].y());
         glVertex3f(vertices[iter->v2].x(),vertices[iter->v2].y(),vertices[iter->v2].z());
 
         glNormal3f(normals[iter->n3].x(),normals[iter->n3].y(),normals[iter->n3].z());
-        glVertexAttrib2f(shaderTexCoord, texCoords[iter->t3].x(),texCoords[iter->t3].y());
+       // glVertexAttrib2f(shaderTexCoord, texCoords[iter->t3].x(),texCoords[iter->t3].y());
         glVertex3f(vertices[iter->v3].x(),vertices[iter->v3].y(),vertices[iter->v3].z());
     }
 
@@ -162,6 +184,7 @@ void ObjectLoader::createDisplayList(GLuint index, GLint shaderTexCoord)
     glPopMatrix();
     glEndList();
 }
+
 
 unsigned int ObjectLoader::createVBO(GLuint verticesBO, GLuint normalsBO, GLuint textCoordsBO)
 {
